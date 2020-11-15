@@ -1,10 +1,13 @@
 const express = require('express')
-const app = express()
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+
 const Todo = require('./models/todo')
 
 const port = 3000
+
+const app = express()
 
 // 與資料庫連線
 mongoose.connect('mongodb://localhost/todo-list', {
@@ -30,7 +33,11 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs')
 
-// 啟動應用程式伺服器
+// 指定經過body-parser解析
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// 設定路由
+// 首頁
 app.get('/', (req, res) => {
   Todo.find()
     .lean()
@@ -38,6 +45,20 @@ app.get('/', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// 進入新增頁面按鈕
+app.get('/todos/new', (req, res) => {
+  res.render('new')
+})
+
+// 填寫完畢新增todo按鈕
+app.post('/todos', (req, res) => {
+  const name = req.body.newTodo
+  Todo.create({ name })
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+})
+
+// 啟動應用程式伺服器
 app.listen(port, () => {
   console.log(`${new Date().getHours()}:${new Date().getMinutes()} app is running on http://localhost:${port}.`)
 })
