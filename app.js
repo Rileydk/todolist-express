@@ -58,6 +58,15 @@ app.post('/todos', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// 檢視詳細資料按鈕
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id
+  Todo.findById(id)
+    .lean()
+    .then(todo => res.render('detail', { todo }))
+    .catch(error => console.error(error))
+})
+
 // 啟動應用程式伺服器
 app.listen(port, () => {
   console.log(`${new Date().getHours()}:${new Date().getMinutes()} app is running on http://localhost:${port}.`)
