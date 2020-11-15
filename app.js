@@ -90,6 +90,15 @@ app.post('/todos/:id/edit', (req, res) => {
     .catch(error => console.error(error))
 })
 
+// 刪除按鈕
+app.post('/todos/:id/delete', (req, res) => {
+  const id = req.params.id
+  Todo.findById(id)
+    .then(todo => todo.remove())
+    .then(() => res.redirect('/'))
+    .catch(error => console.error(error))
+})
+
 //// 啟動應用程式伺服器
 app.listen(port, () => {
   console.log(`${new Date().getHours()}:${new Date().getMinutes()} app is running on http://localhost:${port}.`)
