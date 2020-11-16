@@ -3,6 +3,7 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const methodOverride = require('method-override')
 
 const Todo = require('./models/todo')
 
@@ -34,8 +35,9 @@ app.engine('hbs', exphbs({
 
 app.set('view engine', 'hbs')
 
-//// 指定經過body-parser解析
+//// 指定經過處理
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride('_method'))
 
 //// 設定路由
 // 首頁
@@ -79,7 +81,7 @@ app.get('/todos/:id/edit', (req, res) => {
 })
 
 // 送出編輯結果按鈕
-app.post('/todos/:id/edit', (req, res) => {
+app.put('/todos/:id/edit', (req, res) => {
   const id = req.params.id
   const { name, isDone } = req.body
   console.log(name)
@@ -95,7 +97,7 @@ app.post('/todos/:id/edit', (req, res) => {
 })
 
 // 刪除按鈕
-app.post('/todos/:id/delete', (req, res) => {
+app.delete('/todos/:id/delete', (req, res) => {
   const id = req.params.id
   Todo.findById(id)
     .then(todo => todo.remove())
