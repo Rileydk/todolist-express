@@ -40,7 +40,7 @@
   ```bash
   npm run dev
   ```
-5. 終端機顯示以下內容後，就可以到瀏覽器輸入[http://localhost:3000](http://localhost:3000)使用**Todo List**了！
+7. 終端機顯示以下內容後，就可以到瀏覽器輸入[http://localhost:3000](http://localhost:3000)使用**Todo List**了！
   ```bash
   The server is listening on http://localhost:3000.
   ```
