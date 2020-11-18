@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const methodOverride = require('method-override')
 
+const routes = require('./routes')
 const Todo = require('./models/todo')
 
 //// 設定變數
@@ -40,70 +41,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 //// 設定路由
-// 首頁
-app.get('/', (req, res) => {
-  Todo.find()
-    .lean()
-    .sort({ _id: 'asc' })
-    .then(todos => res.render('index', { todos }))
-    .catch(error => console.error(error))
-})
-
-// 進入新增頁面按鈕
-app.get('/todos/new', (req, res) => {
-  res.render('new')
-})
-
-// 填寫完畢新增todo按鈕
-app.post('/todos', (req, res) => {
-  const name = req.body.newTodo
-  Todo.create({ name })
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
-
-// 檢視詳細資料按鈕
-app.get('/todos/:id', (req, res) => {
-  const id = req.params.id
-  Todo.findById(id)
-    .lean()
-    .then(todo => res.render('detail', { todo }))
-    .catch(error => console.error(error))
-})
-
-// 進入編輯頁面按鈕
-app.get('/todos/:id/edit', (req, res) => {
-  const id = req.params.id
-  Todo.findById(id)
-    .lean()
-    .then(todo => res.render('edit', { todo }))
-    .catch(error => console.error(error))
-})
-
-// 送出編輯結果按鈕
-app.put('/todos/:id/edit', (req, res) => {
-  const id = req.params.id
-  const { name, isDone } = req.body
-  console.log(name)
-  console.log(isDone)
-  Todo.findById(id)
-    .then(todo => {
-      todo.name = name
-      todo.isDone = isDone === 'on'
-      todo.save()
-    })
-    .then(() => res.redirect(`/todos/${id}`))
-    .catch(error => console.error(error))
-})
-
-// 刪除按鈕
-app.delete('/todos/:id/delete', (req, res) => {
-  const id = req.params.id
-  Todo.findById(id)
-    .then(todo => todo.remove())
-    .then(() => res.redirect('/'))
-    .catch(error => console.error(error))
-})
+app.use(routes)
 
 //// 啟動應用程式伺服器
 app.listen(port, () => {
