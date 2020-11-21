@@ -4,13 +4,13 @@
       <div class="row">
         <div class="col-auto mr-auto">
           <input type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}} disabled>
-          <h4 class="d-inline ml-2">{{ this.name }}</h4>
+          <h4 class="d-inline ml-2 text-primary">{{ this.name }}</h4>
         </div>
         <div class="col-auto">
-          <a class="btn btn-secondary" href="/todos/{{ this._id }}">Detail</a>
-          <a href="/todos/{{ this._id }}/edit">Edit</a>
+          <a class="btn btn-primary mr-1" href="/todos/{{ this._id }}">Detail</a>
+          <a class="btn btn-success mr-1" href="/todos/{{ this._id }}/edit">Edit</a>
           <form action="/todos/{{ this._id }}/delete?_method=DELETE" method="POST" style="display: inline;">
-            <button type="submit">Delete</button>
+            <button class="btn btn-danger" type="submit">Delete</button>
           </form>
         </div>
       </div>
