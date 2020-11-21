@@ -1,4 +1,8 @@
 <form action="/todos/new" method="POST">
-  <input type="text" name="name" placeholder="new Todo">
-  <button type="submit">Submit</button>
+  <div class="input-group">
+    <input class="form-control text-primary" type="text" name="name" placeholder="new Todo">
+    <div class="input-group-append">
+      <button class="btn btn-success" type="submit">Create</button>
+    </div>
+  </div>
 </form>
