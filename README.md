@@ -2,6 +2,8 @@
 
 用Express.js和MongoDB建立的待辦清單網站
 
+![cover img](https://github.com/Rileydk/todolist-express/blob/master/screenshot.png)
+
 ## 網站功能
 
 1. 可以瀏覽所有待辦事項
